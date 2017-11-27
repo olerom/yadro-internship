@@ -1,0 +1,3 @@
+rootProject.name = 'yadro-internship'
+include 'service'
+
