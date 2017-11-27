@@ -2,7 +2,10 @@
 
 !.gitignore
 !*.java
+
 !README.md
 !*.gradle
 !gradlew
 !gradlew.bat
+
+!*/
