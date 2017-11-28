@@ -1,7 +1,6 @@
 package com.yadro.server;
 
 import one.nio.http.*;
-import one.nio.server.ServerConfig;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -35,6 +34,8 @@ public class Server extends HttpServer {
     @Path("/service/v1/interfaces")
     public void interfaces(@NotNull final Request request,
                            @NotNull final HttpSession session) throws IOException {
-
+        final OsNetwork osNetwork = new OsNetwork();
+        final Response response = Response.ok(osNetwork.getInfo().toString());
+        session.sendResponse(response);
     }
 }
