@@ -1,5 +1,6 @@
 package com.yadro.server;
 
+import com.google.gson.annotations.SerializedName;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -12,11 +13,17 @@ import java.util.List;
 public class NetworkingInterface {
     @NotNull
     private final String name;
+
     @NotNull
+    @SerializedName("hw_addr")
     private final String hwAddr;
+
     @NotNull
+    @SerializedName("inet_addr")
     private final List<String> inetAddr;
+
     @NotNull
+    @SerializedName("MTU")
     private final String mtu;
 
     public NetworkingInterface(@NotNull final String name,
@@ -27,6 +34,26 @@ public class NetworkingInterface {
         this.hwAddr = hwAddr;
         this.inetAddr = inetAddr;
         this.mtu = mtu;
+    }
+
+    @NotNull
+    public String getName() {
+        return name;
+    }
+
+    @NotNull
+    public String getHwAddr() {
+        return hwAddr;
+    }
+
+    @NotNull
+    public List<String> getInetAddr() {
+        return inetAddr;
+    }
+
+    @NotNull
+    public String getMtu() {
+        return mtu;
     }
 
     @Override
