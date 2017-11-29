@@ -12,10 +12,7 @@ import java.util.List;
  */
 public class NetworkingInterfaceParser {
 
-    @NotNull
     private static final String DELIMETER = "@";
-
-    @NotNull
     private static final String SPACED_DELIMETER = " " + DELIMETER + " ";
 
     @NotNull
@@ -64,7 +61,6 @@ public class NetworkingInterfaceParser {
         }
 
         return networkingInterfaces;
-
     }
 
 }

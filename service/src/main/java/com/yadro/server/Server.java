@@ -5,7 +5,9 @@ import one.nio.http.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -21,64 +23,71 @@ public class Server extends HttpServer {
     @NotNull
     private final Gson gson;
 
+    private final static String API_VERSION = "v1";
+
+    @NotNull
+    private final HashSet<String> availableInterfaces;
+
     public Server(@NotNull final Configuration configuration) throws IOException {
         super(configuration.getServerConfig());
         this.osNetwork = new OsNetwork();
         this.gson = new Gson();
+        this.availableInterfaces = new HashSet<>();
     }
 
     @Path("/service/version")
     public void version(@NotNull final Request request,
                         @NotNull final HttpSession session) throws IOException {
         if (request.getMethod() == Request.METHOD_GET) {
-            final String dummyVersionInfo = "Code:200\n\nContent: {version:\"v1\"}";
-            final Response response = Response.ok(dummyVersionInfo);
-            session.sendResponse(response);
-        } else {
-//            TODO 500
-            final String dummyVersionInfo = "Code:200\n\nContent: {version:\"v1\"}";
-            final Response response = Response.ok(dummyVersionInfo);
-            session.sendResponse(response);
+            try {
+                final String dummyVersionInfo = "{version:\"" + API_VERSION + "\"}";
+                final Response response = Response.ok(dummyVersionInfo);
+                session.sendResponse(response);
+            } catch (Exception e) {
+                handleInternalError(e.getMessage(), session);
+            }
         }
     }
 
-    @Path("/service/v1/interfaces")
+    @Path("/service/" + API_VERSION + "/interfaces")
     public void interfaces(@NotNull final Request request,
                            @NotNull final HttpSession session) throws IOException {
-
-        final List<String> interfaces = getInterfaceNames();
-        final Gson gson = new Gson();
-        gson.toJson(interfaces);
-
-        final Response response = Response.ok(osNetwork.getInfo().toString());
-        session.sendResponse(response);
+        if (request.getMethod() == Request.METHOD_GET) {
+            try {
+                final List<String> interfaces = getInterfaceNames();
+                final Response response = Response.ok(gson.toJson(interfaces));
+                session.sendResponse(response);
+            } catch (Exception e) {
+                handleInternalError(e.getMessage(), session);
+            }
+        }
     }
 
 
     @Override
     public void handleRequest(Request request, HttpSession session) throws IOException {
         final String path = request.getPath();
-        final String methodPath = "/service/v1/interface/";
-        if (path.startsWith(methodPath)) {
+        final String methodPath = "/service/" + API_VERSION + "/interface/";
+        if (path.startsWith(methodPath) && request.getMethod() == Request.METHOD_GET) {
+            final String interfaceName = path.replaceAll(methodPath, "");
 
-            String interfaceName = path.replaceAll(methodPath, "");
+            try {
+                if (availableInterfaces.contains(interfaceName) || getInterfaceNames().contains(interfaceName)) {
+                    List<NetworkingInterface> info = osNetwork.getInfo();
+                    info.removeIf((e) -> !e.getName().equals(interfaceName));
 
-            if (getInterfaceNames().contains(interfaceName)) {
-                System.out.println("YAY");
+                    if (info.size() > 1) {
+                        handleInternalError("Not unique interface name", session);
+                        return;
+                    }
 
-
-                List<NetworkingInterface> info = osNetwork.getInfo();
-                info.removeIf((e) -> !e.getName().equals(interfaceName));
-                System.out.println(info.size());
-                System.out.println(gson.toJson(info.get(0)));
-
-                final Response response = Response.ok(gson.toJson(info.get(0)));
-                session.sendResponse(response);
-            } else {
-                final Response response = Response.ok(
-                        "Code 404\n\nContent: {\"error\":\"interface "
-                                + interfaceName + " was not found\"" + "}");
-                session.sendResponse(response);
+                    final Response response = Response.ok(gson.toJson(info.get(0)));
+                    session.sendResponse(response);
+                } else {
+                    handleError("interface " + interfaceName + " was not found", session, Response.NOT_FOUND);
+                }
+            } catch (Exception e) {
+                handleInternalError(e.getMessage(), session);
             }
         } else {
             super.handleRequest(request, session);
@@ -90,8 +99,23 @@ public class Server extends HttpServer {
         final List<NetworkingInterface> info = osNetwork.getInfo();
         final List<String> interfaces = new ArrayList<>(info.size());
 
+        availableInterfaces.clear();
         info.forEach((e) -> interfaces.add(e.getName()));
+        availableInterfaces.addAll(interfaces);
 
         return interfaces;
+    }
+
+    private void handleInternalError(@NotNull final String message,
+                                     @NotNull final HttpSession session) throws IOException {
+        handleError(message, session, Response.INTERNAL_ERROR);
+    }
+
+    private void handleError(@NotNull final String message,
+                             @NotNull final HttpSession session,
+                             @NotNull final String resultCode) throws IOException {
+        final String errorMsg = "{\"error\":\"" + message + "\"}";
+        final Response response = new Response(resultCode, errorMsg.getBytes(StandardCharsets.UTF_8));
+        session.sendResponse(response);
     }
 }
