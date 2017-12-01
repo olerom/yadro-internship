@@ -19,6 +19,10 @@ public class NetworkingInterface {
     private final String hwAddr;
 
     @NotNull
+    private final String mask;
+
+
+    @NotNull
     @SerializedName("inet_addr")
     private final List<String> inetAddr;
 
@@ -29,11 +33,13 @@ public class NetworkingInterface {
     public NetworkingInterface(@NotNull final String name,
                                @NotNull final String hwAddr,
                                @NotNull final List<String> inetAddr,
-                               @NotNull final String mtu) {
+                               @NotNull final String mtu,
+                               @NotNull final String mask) {
         this.name = name;
         this.hwAddr = hwAddr;
         this.inetAddr = inetAddr;
         this.mtu = mtu;
+        this.mask = mask;
     }
 
     @NotNull
@@ -54,6 +60,11 @@ public class NetworkingInterface {
     @NotNull
     public String getMtu() {
         return mtu;
+    }
+
+    @NotNull
+    public String getMask() {
+        return mask;
     }
 
     @Override

@@ -54,7 +54,7 @@ public class Server extends HttpServer {
                            @NotNull final HttpSession session) throws IOException {
         if (request.getMethod() == Request.METHOD_GET) {
             try {
-                final List<String> interfaces = getInterfaceNames();
+                final InterfaceNamesWrapper interfaces = new InterfaceNamesWrapper(getInterfaceNames());
                 final Response response = Response.ok(gson.toJson(interfaces));
                 session.sendResponse(response);
             } catch (Exception e) {
