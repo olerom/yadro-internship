@@ -10,8 +10,9 @@ import one.nio.net.ConnectionString;
 import one.nio.pool.PoolException;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Date: 30.11.17
@@ -20,14 +21,15 @@ import java.io.IOException;
  */
 public class Client {
 
+    // Так как в one-nio это пул
     @NotNull
-    private final HttpClient httpClient;
+    private final HashMap<String, HttpClient> clients;
 
     @NotNull
     private final Gson gson;
 
-    public Client(String connectionString) {
-        this.httpClient = new HttpClient(new ConnectionString(connectionString));
+    public Client() {
+        this.clients = new HashMap<>();
         this.gson = new Gson();
     }
 
@@ -46,8 +48,9 @@ public class Client {
     }
 
     @NotNull
-    public String getInterfaceNames() throws InterruptedException, IOException, HttpException, PoolException {
-        final Response response = httpClient.get("/service/v1/interfaces");
+    public String getInterfaceNames(@NotNull final String server,
+                                    final int port) throws InterruptedException, IOException, HttpException, PoolException {
+        final Response response = getNeededClient(server, port).get("/service/v1/interfaces");
         final InterfaceNamesWrapper interfaceNamesWrapper = gson.fromJson(response.getBodyUtf8(), InterfaceNamesWrapper.class);
         final List<String> names = interfaceNamesWrapper.getInterfaceNames();
 
@@ -66,14 +69,25 @@ public class Client {
 
 
     @NotNull
-    public String getInterfaceInfo(@NotNull final String interfaceName) throws InterruptedException, IOException, HttpException, PoolException {
-        final Response response = httpClient.get("/service/v1/interface/" + interfaceName);
+    public String getInterfaceInfo(@NotNull final String interfaceName,
+                                   @NotNull final String server,
+                                   final int port) throws InterruptedException, IOException, HttpException, PoolException {
+
+        final Response response = getNeededClient(server, port).get("/service/v1/interface/" + interfaceName);
         final NetworkingInterface networkingInterface = gson.fromJson(response.getBodyUtf8(), NetworkingInterface.class);
 
-        final InterfaceInfo info = new InterfaceInfo(networkingInterface);
+        final InterfaceInfo interfaceInfo = new InterfaceInfo(networkingInterface);
 
-        return info.toString();
+        return interfaceName + ":\t" + interfaceInfo.toString();
+    }
 
+    private HttpClient getNeededClient(@NotNull final String server,
+                                       final int port) {
+        final String key = server + ":" + port;
+        if (!clients.containsKey(key)) {
+            clients.put(key, new HttpClient(new ConnectionString(key)));
+        }
+        return clients.get(key);
     }
 
 

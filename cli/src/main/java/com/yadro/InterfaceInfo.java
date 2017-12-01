@@ -47,15 +47,37 @@ public class InterfaceInfo {
         this.mtu = prototype.getMtu();
     }
 
+    @NotNull
+    public String getHwAddr() {
+        return hwAddr;
+    }
+
+    @NotNull
+    public String getIpv4() {
+        return ipv4;
+    }
+
+    @NotNull
+    public String getMask() {
+        return mask;
+    }
+
+    @NotNull
+    public String getIpv6() {
+        return ipv6;
+    }
+
+    @NotNull
+    public String getMtu() {
+        return mtu;
+    }
 
     @Override
     public String toString() {
-        return "InterfaceInfo{" +
-                "hwAddr='" + hwAddr + '\'' +
-                ", ipv4='" + ipv4 + '\'' +
-                ", mask='" + mask + '\'' +
-                ", ipv6='" + ipv6 + '\'' +
-                ", mtu='" + mtu + '\'' +
-                '}';
+        return "Hw_addr: " + hwAddr +
+                "\n\tIpv4: " + ipv4 +
+                ", mask " + mask +
+                "\n\tIpv6: " + ipv6 +
+                "\n\tMTU: " + mtu;
     }
 }
