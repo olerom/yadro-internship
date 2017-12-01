@@ -37,7 +37,7 @@ public class NetworkingInterfaceParser {
             }
 
             final String hwAddr = loopback ? "Loopback" : shittySplit[i + 1];
-            final List<String> inetAddr = new ArrayList<>();
+            final List<String> inetAddr = new ArrayList<>(2);
             String mask = "";
             for (; i < length; i++) {
                 if (shittySplit[i - 1].equals("inet") && shittySplit[i].startsWith("addr")) {

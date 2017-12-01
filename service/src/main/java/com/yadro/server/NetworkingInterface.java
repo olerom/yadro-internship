@@ -76,4 +76,28 @@ public class NetworkingInterface {
                 ", mtu='" + mtu + '\'' +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        NetworkingInterface that = (NetworkingInterface) o;
+
+        if (!name.equals(that.name)) return false;
+        if (!hwAddr.equals(that.hwAddr)) return false;
+        if (!mask.equals(that.mask)) return false;
+        if (!inetAddr.equals(that.inetAddr)) return false;
+        return mtu.equals(that.mtu);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + hwAddr.hashCode();
+        result = 31 * result + mask.hashCode();
+        result = 31 * result + inetAddr.hashCode();
+        result = 31 * result + mtu.hashCode();
+        return result;
+    }
 }
