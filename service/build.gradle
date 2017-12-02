@@ -21,3 +21,14 @@ dependencies {
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
+
+task getJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Service server',
+                'Implementation-Version': version,
+                'Main-Class': 'com.yadro.Service'
+    }
+    baseName = 'service'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}

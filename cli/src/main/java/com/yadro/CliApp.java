@@ -20,11 +20,11 @@ public class CliApp {
     private Client client;
 
     public static void main(String[] args) {
-        new CliApp(new Client()).run();
+        new CliApp().run();
     }
 
-    public CliApp(@NotNull Client client) {
-        this.client = client;
+    public CliApp() {
+        this.client = new Client();
     }
 
     public void run() {

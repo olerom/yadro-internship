@@ -2,6 +2,7 @@ package com.yadro;
 
 import com.yadro.server.ConfigurationImpl;
 import com.yadro.server.Server;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
@@ -12,8 +13,18 @@ import java.io.IOException;
  */
 public class Service {
 
+    @NotNull
+    final Server server;
+
     public static void main(String[] args) throws IOException {
-        final Server server = new Server(new ConfigurationImpl(8080));
+        new Service(8080).run();
+    }
+
+    public Service(final int port) throws IOException {
+        this.server = new Server(new ConfigurationImpl(port));
+    }
+
+    public void run() {
         server.start();
     }
 }

@@ -1,4 +1,5 @@
 rootProject.name = 'yadro-internship'
 include 'service'
 include 'cli'
+include 'example'
 

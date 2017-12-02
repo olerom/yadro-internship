@@ -8,5 +8,5 @@ EXPOSE 8080
 COPY ./ ./home/yadro-internship/
 
 WORKDIR home/yadro-internship
-RUN ./gradlew :cli:getJar
-RUN java -jar ./cli/build/libs/cli-1.0-SNAPSHOT.jar
+RUN ./gradlew :example:getJar
+RUN java -jar ./example/build/libs/example-1.0-SNAPSHOT.jar
