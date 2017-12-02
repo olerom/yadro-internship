@@ -81,6 +81,7 @@ public class Client {
         return interfaceName + ":\t" + interfaceInfo.toString();
     }
 
+    @NotNull
     private HttpClient getNeededClient(@NotNull final String server,
                                        final int port) {
         final String key = server + ":" + port;
