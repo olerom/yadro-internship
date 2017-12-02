@@ -31,6 +31,7 @@ public class CliApp {
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
         while (true) {
+            System.out.printf("> ");
             String[] input = new String[0];
             try {
                 input = bufferedReader.readLine().split("\\s");

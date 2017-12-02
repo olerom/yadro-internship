@@ -2,11 +2,13 @@ group 'com.yadro'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'application'
 
 sourceCompatibility = 1.8
+mainClassName = "com.yadro.Service"
 
 repositories {
-    mavenCentral()
+    jcenter()
 }
 
 dependencies {

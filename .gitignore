@@ -9,5 +9,6 @@
 !gradlew.bat
 !.travis.yml
 !gradle/wrapper/*
+!Dockerfile
 
 !*/
