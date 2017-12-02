@@ -42,7 +42,10 @@ public class Client {
                 "VERSION:\n" +
                 "0.0.0\n\n" +
                 "COMMANDS:\n" +
-                "help, h Shows a list of commands or help for one command ...\n\n" +
+                "help, h Shows a list of commands or help for one command\n\n" +
+                "list --server <server> --port <port> Shows a list of networking interfaces\n\n" +
+                "show <interface name> --server <server> --port <port>  Shows a detailed info about interface\n\n" +
+                "quit, q Exit\n\n" +
                 "GLOBAL OPTIONS\n" +
                 "-- version Shows version information";
     }

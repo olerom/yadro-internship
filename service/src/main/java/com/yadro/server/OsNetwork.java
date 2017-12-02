@@ -1,6 +1,7 @@
 package com.yadro.server;
 
 import org.apache.commons.io.IOUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,16 +15,17 @@ import java.util.List;
  */
 public class OsNetwork {
 
+    @NotNull
     public List<NetworkingInterface> getInfo() throws IOException {
-        Process ifconfig = Runtime.getRuntime().exec("ifconfig");
-        InputStream inputStream = ifconfig.getInputStream();
+        final Process ifconfig = Runtime.getRuntime().exec("ifconfig");
+        final InputStream inputStream = ifconfig.getInputStream();
 
-        StringWriter writer = new StringWriter();
+        final StringWriter writer = new StringWriter();
         IOUtils.copy(inputStream, writer, "UTF8");
-        String theString = writer.toString();
+        final String theString = writer.toString();
 
 
-        List<NetworkingInterface> parse = new NetworkingInterfaceParser().parse(theString);
+        final List<NetworkingInterface> parse = new NetworkingInterfaceParser().parse(theString);
 
         return parse;
     }

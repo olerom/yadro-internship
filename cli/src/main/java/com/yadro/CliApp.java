@@ -95,6 +95,8 @@ public class CliApp {
             System.out.println("Port is not a digit value");
         } catch (InterruptedException | IOException | HttpException | PoolException e) {
             System.out.println("Make sure that server or port arguments were correct");
+        } catch (Exception e) {
+            System.out.println("Internal error has occurred");
         }
     }
 
@@ -117,6 +119,8 @@ public class CliApp {
             System.out.println("Port is not a digit value");
         } catch (InterruptedException | IOException | HttpException | PoolException e) {
             System.out.println("Make sure that server or port arguments were correct");
+        } catch (Exception e) {
+            System.out.println("Internal error has occurred");
         }
     }
 
