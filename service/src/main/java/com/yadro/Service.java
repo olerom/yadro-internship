@@ -1,6 +1,6 @@
 package com.yadro;
 
-import com.yadro.server.ConfigurationImpl;
+import com.yadro.server.config.ConfigurationImpl;
 import com.yadro.server.Server;
 import org.jetbrains.annotations.NotNull;
 

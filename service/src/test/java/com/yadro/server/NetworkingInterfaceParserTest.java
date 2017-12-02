@@ -1,5 +1,7 @@
 package com.yadro.server;
 
+import com.yadro.server.parser.NetworkingInterfaceParser;
+import com.yadro.server.pojos.NetworkingInterface;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.junit.Before;

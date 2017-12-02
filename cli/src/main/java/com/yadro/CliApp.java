@@ -1,6 +1,7 @@
 package com.yadro;
 
 
+import com.yadro.client.Client;
 import one.nio.http.HttpException;
 import one.nio.pool.PoolException;
 import org.jetbrains.annotations.NotNull;

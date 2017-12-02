@@ -1,5 +1,6 @@
-package com.yadro.server;
+package com.yadro.server.config;
 
+import com.yadro.server.config.Configuration;
 import one.nio.config.ConfigParser;
 import one.nio.server.ServerConfig;
 import org.jetbrains.annotations.NotNull;

@@ -1,5 +1,7 @@
-package com.yadro.server;
+package com.yadro.server.os;
 
+import com.yadro.server.pojos.NetworkingInterface;
+import com.yadro.server.parser.NetworkingInterfaceParser;
 import org.apache.commons.io.IOUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -22,12 +24,9 @@ public class OsNetwork {
 
         final StringWriter writer = new StringWriter();
         IOUtils.copy(inputStream, writer, "UTF8");
-        final String theString = writer.toString();
+        final String info = writer.toString();
 
-
-        final List<NetworkingInterface> parse = new NetworkingInterfaceParser().parse(theString);
-
-        return parse;
+        return new NetworkingInterfaceParser().parse(info);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.yadro.server;
+package com.yadro.server.config;
 
 import one.nio.server.ServerConfig;
 import org.jetbrains.annotations.NotNull;

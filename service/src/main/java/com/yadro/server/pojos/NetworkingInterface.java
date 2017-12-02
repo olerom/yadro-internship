@@ -1,4 +1,4 @@
-package com.yadro.server;
+package com.yadro.server.pojos;
 
 import com.google.gson.annotations.SerializedName;
 import org.jetbrains.annotations.NotNull;

@@ -1,6 +1,6 @@
-package com.yadro;
+package com.yadro.client.wrappers;
 
-import com.yadro.server.NetworkingInterface;
+import com.yadro.server.pojos.NetworkingInterface;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;

@@ -1,8 +1,9 @@
-package com.yadro;
+package com.yadro.client;
 
 import com.google.gson.Gson;
-import com.yadro.server.InterfaceNamesWrapper;
-import com.yadro.server.NetworkingInterface;
+import com.yadro.client.wrappers.InterfaceInfo;
+import com.yadro.server.pojos.InterfaceNamesWrapper;
+import com.yadro.server.pojos.NetworkingInterface;
 import one.nio.http.HttpClient;
 import one.nio.http.HttpException;
 import one.nio.http.Response;

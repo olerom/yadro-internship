@@ -1,5 +1,6 @@
-package com.yadro.server;
+package com.yadro.server.parser;
 
+import com.yadro.server.pojos.NetworkingInterface;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
