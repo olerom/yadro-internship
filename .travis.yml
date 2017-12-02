@@ -20,6 +20,7 @@ cache:
 
 before_install:
   - docker build -t yadro-internship .
+  - docker run yadro-internship "cli_net q"
 
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
