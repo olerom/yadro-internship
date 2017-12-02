@@ -19,8 +19,7 @@ cache:
     - $HOME/.gradle/wrapper/
 
 before_install:
-  - docker build -t yadro-internship .
-  - docker run yadro-internship "cli_net q"
+  - docker build -t olerom/yadro-internship .
 
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
