@@ -37,7 +37,7 @@ public class CliApp {
             try {
                 input = bufferedReader.readLine().split("\\s");
             } catch (IOException e) {
-                System.out.println("Restart app");
+                System.out.println("IO problems. Restart app");
                 System.exit(1);
             }
 
